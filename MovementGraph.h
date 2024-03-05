@@ -2,17 +2,16 @@
 // Un insieme di Station (nodi del grafo) e Track (archi del grafo che connettono le stazioni)
 // Ci possono essere più track che connettono le stesse stazioni
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <list>
 #include <utility> // Per std::pair
-#include <set>
-#include <algorithm> // Per find
 
 // Rappresenta un nodo del grafo ("S_i")
 struct Station
 {
-   int _id;
+   int _id = 0;
 
    Station(){}
    Station(int id):_id(id){}
@@ -37,44 +36,22 @@ class MovementGraph
 private:
     std::vector<Station> _stations; // Nodi del grafo: lista delle stazioni    
     std::list<Track> _tracks; // Archi del grafo: lista delle tracks percorribili
+
+    std::list<std::list<Track>> get_feasable_path();
 public:
-    MovementGraph(){};
-    // N = numero di stazioni
-    MovementGraph(int N)
-    {
-        for(int k=0; k<N; ++k) _stations.emplace_back(Station(k));
-        _tracks = {};
-    }
+    MovementGraph(){};    
+    MovementGraph(int N); // N = numero di stazioni
+    ~MovementGraph();
 
-    void addTrack(Track t) {
-        // Controllo prima che le stazioni siano nel movement graph (immaginando che Station sia una struttura pià complessa)
-        if(std::find(_stations.begin(), _stations.end(), t._stations.first) != _stations.end()
-            && std::find(_stations.begin(), _stations.end(), t._stations.second) != _stations.end())
-            {
-                _tracks.emplace_back(t);
-            }
-    }
+    void addTrack(Track t);
+    void removeTrack(int track_id);
 
-    friend std::ostream& operator<< (std::ostream &out, const MovementGraph &m)
+    std::vector<Station> findPivotStations();
+
+    friend std::ostream& operator<<(std::ostream &out, const MovementGraph &m)
     {
         out << "Stations " << m._stations.size() << std::endl;
-        for(Track t: m._tracks) 
-            out << t.to_string() << std::endl;
+        for(Track t: m._tracks)  out << t.to_string() << std::endl;
         return out;
     }
-
-    ~MovementGraph();
 };
-
-// std::ostream& operator << (std::ostream &out, const MovementGraph &m)
-// {
-//     out << "Stations " << m._stations.size() << std::endl;
-//     for(Track t: m._tracks) 
-//         out << t.to_string() << std::endl;
-//     return out;
-// }
-
-
-MovementGraph::~MovementGraph()
-{
-}

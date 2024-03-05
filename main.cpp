@@ -24,5 +24,13 @@ int main() {
 
     std::cout << "Test Movement Graph" << std::endl << m << std::endl;
 
+    // Idea 1: trovo tutti i possibili percorsi, itero le stazioni e vedo quali
+    //         il predecessore non ha alternative che quella
+    // 
+    // Idea 2: trovo tutti i possibili percorsi, itero le stazioni e vedo quali
+    //         esistono in tutti i feasable
+    // 
+    // Idea 3: trovo i feasable per vedere se > 0, tolgo una ad una le stazioni e ricalcolo i feasable 
+
     return 0;
 }
