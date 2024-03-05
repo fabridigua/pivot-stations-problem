@@ -4,22 +4,25 @@
 
 int main() {
 
-    std::vector<Station> stations = {
-        {0}, {1}, {2}, {3}, {4}, {5}, {6}
-    };
+    // Creo il grafo dell'esempio
+    int num_stations = 7;
+    MovementGraph m(num_stations);
+    m.addTrack({0, 1, 0});
+    m.addTrack({0, 2, 1});
+    m.addTrack({0, 4, 2});
+    m.addTrack({2, 1, 3});
+    m.addTrack({2, 3, 4});
+    m.addTrack({2, 3, 5});
+    m.addTrack({4, 3, 6});
+    m.addTrack({1, 3, 7});
+    m.addTrack({1, 5, 8});
+    m.addTrack({3, 5, 9});
+    m.addTrack({3, 5, 10});
+    m.addTrack({5, 6, 11});
+    //Nota: nel grafo di esempio sono presenti due "T10", chiamo "T12" quello tra S_1 e S_6
+    m.addTrack({1, 6, 12}); 
 
-    std::vector<Track> tracks = {
-        {&stations[0], &stations[1], 0}, 
-        {&stations[0], &stations[2], 1},
-        {&stations[0], &stations[4], 2}
-        //...
-    };
-
-    MovementGraph m(stations, tracks);
-
-    std::cout << "test" << std::endl;
-
-    for(auto e: tracks) std::cout << e.to_string() << std::endl;
+    std::cout << "Test Movement Graph" << std::endl << m << std::endl;
 
     return 0;
 }
