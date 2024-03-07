@@ -15,17 +15,6 @@ std::list<std::list<Track>> MovementGraph::get_feasable_paths(int S_o, int S_d)
     // Chiamo la DFS
     recursive_dfs(S_o, S_d, path, feasable_paths);
 
-    // Stampo la lista di percorsi trovati
-    for (auto path_found : feasable_paths)
-    {
-        std::cout << "S" << S_o;
-        for (auto t : path_found)
-        {
-            std::cout << " -> <T" << t._id << "> -> S" << t._destination_id;
-        }
-        std::cout << std::endl;
-    }
-
     return feasable_paths;
 }
 
@@ -71,7 +60,16 @@ std::list<int> MovementGraph::get_station_list(std::list<Track> path)
     return { stations.begin(), stations.end() };
 }
 
-
+void MovementGraph::print_paths(const std::list<std::list<Track>>& feasable_paths, int S_o)
+{
+    for (auto path_found : feasable_paths)
+    {
+        std::cout << "S" << S_o;
+        for (auto t : path_found)
+            std::cout << " -> <T" << t._id << "> -> S" << t._destination_id;
+        std::cout << std::endl;
+    }
+}
 
 MovementGraph::MovementGraph(int N)
 {
@@ -95,10 +93,10 @@ void MovementGraph::addTrack(Track t) {
 
 void MovementGraph::removeTrack(int station_id, int track_id)
 {
-    if (std::find(_stations.begin(), _stations.end(), station_id) == _stations.end()) return;
-    auto station = getStation(station_id);
-    station._tracks.erase(std::remove_if(std::begin(station._tracks), std::end(station._tracks), 
-        [track_id](Track t) {return t._id == track_id; }), std::end(station._tracks));
+    auto station_iter = std::find(_stations.begin(), _stations.end(), station_id);
+    if (station_iter == _stations.end()) return;
+    (*station_iter)._tracks.erase(std::remove_if(std::begin((*station_iter)._tracks), std::end((*station_iter)._tracks),
+        [track_id](Track t) {return t._id == track_id; }), std::end((*station_iter)._tracks));
 }
 
 void MovementGraph::removeStation(int station_id)
@@ -114,6 +112,9 @@ std::vector<int> MovementGraph::findPivotStations_strategy1(int S_o, int S_d)
     std::vector<int> pivots = {};
 
     auto paths_found = get_feasable_paths(S_o, S_d);
+
+    // Stampo la lista di percorsi trovati
+    print_paths(paths_found, S_o);
 
     for (const auto& s : _stations)
     {
@@ -145,6 +146,8 @@ std::vector<int> MovementGraph::findPivotStations_strategy2(int S_o, int S_d)
     auto stations_backup = _stations;
 
     auto paths_found = get_feasable_paths(S_o, S_d);
+
+    print_paths(paths_found, S_o);
 
     if (paths_found.size() == 0) return {};
 

@@ -52,6 +52,7 @@ private:
 
     // Metodo di utility: estrae la lista di stazioni (id) da un path (ovvero una lista di track)
     std::list<int> get_station_list(std::list<Track> path);
+    void print_paths(const std::list<std::list<Track>>& paths, int S_o);
     
 public:
     MovementGraph(){};    
