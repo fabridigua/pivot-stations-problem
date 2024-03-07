@@ -33,6 +33,7 @@ int main() {
     // Nel Movement Graph di esempio non sono presenti pivot points, ad esclusione degli stessi S_o e S_d
     // Tuttavia se ad esempio elimino T12 (vedi "movement_graph_esempio_1_noT12.png"), ecco che S_5 diventa una pivot station:
     m.removeTrack(1, 12);
+    std::cout << std::endl << "Movement Graph - Esempio 1 senza T12" << std::endl << m << std::endl;
     pivots_s1 = m.findPivotStations_strategy1(0, 6); // Returns [S_0, S_5, S_6]
     pivots_s2 = m.findPivotStations_strategy2(0, 6); // Returns [S_0, S_5, S_6]
 
@@ -43,20 +44,12 @@ int main() {
     num_stations = 11;
 
     MovementGraph m2(num_stations);
-    m2.addTrack({ 0, 1, 0 });
-    m2.addTrack({ 1, 2, 1 });
-    m2.addTrack({ 1, 3, 2 });
-    m2.addTrack({ 2, 4, 3 });
-    m2.addTrack({ 4, 5, 4 });
-    m2.addTrack({ 5, 6, 5 });
-    m2.addTrack({ 3, 6, 6 });
-    m2.addTrack({ 6, 7, 7 });
-    m2.addTrack({ 7, 8, 8 });
-    m2.addTrack({ 7, 9, 9 });
-    m2.addTrack({ 8, 10, 10 });
-    m2.addTrack({ 9, 10, 11 });
+    // Un initializer_list per inserire un numero arbitrario di elementi e scrivere in modo più compatto la lista:
+    m2.addTracks({
+        { 0, 1, 0 }, { 1, 2, 1 }, { 1, 3, 2 }, { 2, 4, 3 }, { 4, 5, 4 }, { 5, 6, 5 },
+        { 3, 6, 6 }, { 6, 7, 7 }, { 7, 8, 8 }, { 7, 9, 9 }, { 8, 10, 10 }, { 9, 10, 11 } });
 
-    std::cout << "Movement Graph - Esempio 2" << std::endl << m2 << std::endl;
+    std::cout << std::endl << "Movement Graph - Esempio 2" << std::endl << m2 << std::endl;
 
     pivots_s1 = m2.findPivotStations_strategy1(0, 10); // Returns [S_0, S_1, S_6, S_7, S_10]
     pivots_s2 = m2.findPivotStations_strategy2(0, 10); // Returns [S_0, S_1, S_6, S_7, S_10]
