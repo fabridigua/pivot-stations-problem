@@ -46,7 +46,7 @@ Dato un Movement Graph m, una stazione di partenza S_o e una destinazione S_d, t
 
 Nell'esempio del testo, senza considerare le stazioni di partenza e arrivo (S_0 e S_6) non sono presenti altre Pivot Station:
 
-![](.\movement_graph_esempio_1.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/movement_graph_esempio_1.png)
 
 Esecuzione algoritmo:
 `[Strategy 1] Pivot Stations found between S0 and S6:`
@@ -59,7 +59,7 @@ Esecuzione algoritmo:
 
 Tuttavia se elimino **T_12**, la stazione S_5 diventa una Pivot Station:
 
-![](.\movement_graph_esempio_1_noT12.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/movement_graph_esempio_1_noT12.png)
 
 Esecuzione:
 
@@ -77,7 +77,7 @@ Esecuzione:
 
 Per testare maggiormente il codice ho costruito un'ulteriore Movement Graph, leggermente più complesso:
 
-![](.\movement_graph_esempio_2.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/movement_graph_esempio_2.png)
 
 in cui mi aspetto che le stazioni pivot siano S_o, S_1, S_6, S_7 e S_10. Infatti:
 
