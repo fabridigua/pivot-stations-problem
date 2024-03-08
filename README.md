@@ -8,7 +8,7 @@ Linguaggio utilizzato: **C++ 14**
 
 ----
 
-#### Definizioni
+### Definizioni
 
 ##### Movement Graph 
 
@@ -22,15 +22,11 @@ Si tratta di una stazione che, a prescindere dal percorso scelto del treno per a
 In altre parole, tale stazione sarà presente in tutti i percorsi possibili tra S<sub>o</sub>  e S<sub>d</sub>.
 **Nota**: per semplicità, considero come Pivot Station anche la stazione di partenza e quella di arrivo.
 
----
-
-#### Problema
+### Problema
 
 Dato un *Movement Graph* `m`, una stazione di partenza S<sub>o</sub> e una destinazione S<sub>d</sub>, trovare le Pivot Stations del grafo.
 
----
-
-#### Implementazione
+### Implementazione
 
 - Inizialmente mi sono concentrato sulla definizione del *Movement Graph*: ho creato una classe `MovementGraph` che rappresenta il grafo tramite una lista di `Station`, una struttura che include un id numerico e una lista di possibili `Track`, che collegano la stazione ad un'altra stazione specificata.
 - In seguito ho definito la ricerca dei percorsi possibili da una stazione di partenza ad una di arrivo, implementando l'algoritmo di *Depth First Search*, che ricorsivamente visita ciascun nodo (stazione) del grafo, analizzandone gli archi (i track) costruendo la lista di percorsi, con un principio simile agli algoritmi di backtracking, ovvero torna indietro nel percorso, aggiungendoci nuovi nodi raggiungibili per vedere se si può arrivare alla destinazione.
@@ -42,7 +38,7 @@ Dato un *Movement Graph* `m`, una stazione di partenza S<sub>o</sub> e una desti
 
 
 
-#### Esecuzione
+### Esecuzione
 
 Nell'esempio del testo, senza considerare le stazioni di partenza e arrivo (S<sub>0</sub> e  S<sub>6</sub>) non sono presenti altre Pivot Station, in quanto per ogni stazione S<sub>i</sub> in [S<sub>1</sub>, S<sub>5</sub>] esiste almeno un percorso tra S<sub>0</sub> e S<sub>6</sub> che non include S_i:
 
@@ -97,7 +93,7 @@ in cui mi aspetto che le stazioni pivot siano  S<sub>0</sub>, S<sub>1</sub>, S<s
 
 
 
-#### Analisi complessità
+### Analisi complessità
 
 L'algoritmo di DFS da sè ha complessità **O(V+E)**, dove V è l'insieme dei nodi (stazioni) del grafo ed E l'insieme degli archi (tratti).
 Questo perchè dipende dal numero di visite ai nodi effettuate durante la ricerca: nel caso peggiore da ogni stazione si può raggiungere ogni altra stazione, portando la complessità a V + E.
@@ -105,19 +101,16 @@ Questo perchè dipende dal numero di visite ai nodi effettuate durante la ricerc
 **Strategia 1:**
 Nel corpo principale, oltre alla DFS, faccio un ciclo annidato: che dipende dal numero di stazioni V e da quello dei path trovati, che chiamo P.
 
-`       ` 
-	`// 1. Per ogni stazione del grafo, guardo se è in tutti i path trovati` 
-	`for (const auto& s : _stations)
-    {        `	
-
-`		bool is_pivot = true;
+`    // 1. Per ogni stazione del grafo, guardo se è in tutti i path trovati
+    for (const auto& s : _stations)
+    {
+        bool is_pivot = true;
         // 1.1 Cicli i percorsi da S-o a S-d
         for (auto p : paths_found)
-        {            `	
-
-`		    // 1.2 Estraggo le stazioni del percorso
+        {
+            // 1.2 Estraggo le stazioni del percorso
             auto path_stations = get_station_list(p);
-            // 1.3 Cerco la stazione: se non c'è so già che non è una pivot station, esco e vado avanti
+            // 1.3 Cerco la stazione
             if ((std::find(path_stations.begin(), path_stations.end(), s._id) == path_stations.end()))
             {
                 is_pivot = false;
