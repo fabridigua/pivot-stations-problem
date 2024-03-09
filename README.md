@@ -31,7 +31,7 @@ In altre parole, tale stazione sarà presente in tutti i percorsi possibili tra 
 
 Dato un *Movement Graph* `m`, una stazione di partenza S<sub>o</sub> e una destinazione S<sub>d</sub>, trovare le Pivot Stations del grafo.
 
-![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_graph_esempio_testo.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_graph_testo.png)
 
 ### Implementazione
 
