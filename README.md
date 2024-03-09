@@ -13,8 +13,12 @@ Linguaggio utilizzato: **C++ 14**
 ##### Movement Graph 
 
 Si tratta di un grafo diretto aciclico (*DAG*), che rappresenta tutti i possibili percorsi percorribili da un treno.
+
 I nodi del grafo rappresentano le *stazioni*, mentre gli archi i possibili *tratti* del percorso che collegano due stazioni.
-Ci possono essere situazioni in cui il treno può dover scegliere tra più tratti per raggiungere la stazione successiva.
+
+Ci sono situazioni in cui il treno deve scegliere tra più tratti per raggiungere una specifica stazione successiva.
+
+
 
 ##### Pivot Station
 
@@ -27,15 +31,19 @@ In altre parole, tale stazione sarà presente in tutti i percorsi possibili tra 
 
 Dato un *Movement Graph* `m`, una stazione di partenza S<sub>o</sub> e una destinazione S<sub>d</sub>, trovare le Pivot Stations del grafo.
 
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_testo.png)
+
 ### Implementazione
 
 - Inizialmente mi sono concentrato sulla definizione del *Movement Graph*: ho creato una classe `MovementGraph` che rappresenta il grafo tramite una lista di `Station`, una struttura che include un id numerico e una lista di possibili `Track`, che collegano la stazione ad un'altra stazione specificata.
-- In seguito ho definito la ricerca dei percorsi possibili da una stazione di partenza ad una di arrivo, implementando l'algoritmo di *Depth First Search*(metodo `recursive_dfs()`), che ricorsivamente visita ciascun nodo (stazione) del grafo, analizzandone gli archi (i track) costruendo la lista di percorsi, con un principio simile agli algoritmi di backtracking, ovvero torna indietro nel percorso, aggiungendoci nuovi nodi raggiungibili per vedere se si può arrivare alla destinazione.
+- In seguito ho implementato la ricerca dei percorsi possibili da una stazione di partenza ad una di arrivo, utilizzando l'algoritmo di *Depth First Search*(metodo `recursive_dfs()`), che ricorsivamente visita ciascun nodo (stazione) del grafo, analizzandone gli archi (i track) e costruendo la lista di percorsi, con un principio simile agli algoritmi di backtracking, ovvero torna indietro nel percorso, aggiungendoci nuovi nodi raggiungibili per vedere se si può arrivare alla destinazione.
 - Ho infine implementato due strategie per la ricerca delle Pivot Station dati S<sub>o</sub>, S<sub>d</sub> e la lista di percorsi possibili:
   - **Strategia 1**:  (metodo `MovementGraph::findPivotStations_strategy1()`)
+
     Una volta trovati i percorsi che portano da S<sub>o</sub> a S<sub>d</sub> cerco le stazioni che sono presenti in tutti i percorsi.
   - **Strategia 2**: (metodo `MovementGraph::findPivotStations_strategy2()`) 
-    Elimino una alla volta le stazioni del grafo e cerco i percorsi da S<sub>o</sub> a S<sub>d</sub>: se non ne trovo la stazione eliminata è pivot.
+
+     Elimino una alla volta le stazioni del grafo e cerco i percorsi da S<sub>o</sub> a S<sub>d</sub>: se non ne trovo la stazione eliminata è pivot.
 
 
 
@@ -43,7 +51,7 @@ Dato un *Movement Graph* `m`, una stazione di partenza S<sub>o</sub> e una desti
 
 Nell'esempio del testo, senza considerare le stazioni di partenza e arrivo (S<sub>0</sub> e  S<sub>6</sub>) non sono presenti altre Pivot Station, in quanto per ogni stazione S<sub>i</sub> in [S<sub>1</sub>, S<sub>5</sub>] esiste almeno un percorso tra S<sub>0</sub> e S<sub>6</sub> che non include S_i:
 
-![](https://github.com/fabridigua/pivot-stations-problem/blob/main/movement_graph_esempio_1.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_graph_esempio_1.png)
 
 Esecuzione algoritmo:
 ```
@@ -58,7 +66,7 @@ S6
 
 Tuttavia se elimino **T<sub>12</sub>**, la stazione S<sub>5</sub> diventa una Pivot Station:
 
-![](https://github.com/fabridigua/pivot-stations-problem/blob/main/movement_graph_esempio_1_noT12.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_graph_esempio_1_noT12.png)
 
 Esecuzione:
 
@@ -76,7 +84,7 @@ S6
 
 Per testare maggiormente il codice ho costruito un ulteriore *Movement Graph*, leggermente più complesso:
 
-![](https://github.com/fabridigua/pivot-stations-problem/blob/main/movement_graph_esempio_2.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_graph_esempio_2.png)
 
 in cui mi aspetto che le stazioni pivot siano  S<sub>0</sub>, S<sub>1</sub>, S<sub>6</sub>, S<sub>7</sub> e S<sub>10</sub>. Infatti:
 
@@ -154,6 +162,3 @@ for (const auto& s : _stations)
 }
 ```
 La complessità dunque è data da **O( (V -1 + E) * V)** ovvero **O(V^2 + V*E)**, dove V è il numero di nodi, E gli archi.
-
-
-
