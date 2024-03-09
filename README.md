@@ -31,7 +31,7 @@ In altre parole, tale stazione sarà presente in tutti i percorsi possibili tra 
 
 Dato un *Movement Graph* `m`, una stazione di partenza S<sub>o</sub> e una destinazione S<sub>d</sub>, trovare le Pivot Stations del grafo.
 
-![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_testo.png)
+![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_graph_esempio_testo.png)
 
 ### Implementazione
 
@@ -43,13 +43,13 @@ Dato un *Movement Graph* `m`, una stazione di partenza S<sub>o</sub> e una desti
     Una volta trovati i percorsi che portano da S<sub>o</sub> a S<sub>d</sub> cerco le stazioni che sono presenti in tutti i percorsi.
   - **Strategia 2**: (metodo `MovementGraph::findPivotStations_strategy2()`) 
 
-     Elimino una alla volta le stazioni del grafo e cerco i percorsi da S<sub>o</sub> a S<sub>d</sub>: se non ne trovo la stazione eliminata è pivot.
+     Elimino una alla volta le stazioni del grafo e cerco i percorsi da S<sub>o</sub> a S<sub>d</sub>: se non ne trovo, la stazione eliminata è pivot.
 
 
 
 ### Esecuzione
 
-Nell'esempio del testo, senza considerare le stazioni di partenza e arrivo (S<sub>0</sub> e  S<sub>6</sub>) non sono presenti altre Pivot Station, in quanto per ogni stazione S<sub>i</sub> in [S<sub>1</sub>, S<sub>5</sub>] esiste almeno un percorso tra S<sub>0</sub> e S<sub>6</sub> che non include S_i:
+Nell'esempio del testo, senza considerare le stazioni di partenza e arrivo (S<sub>0</sub> e  S<sub>6</sub>) non sono presenti altre Pivot Station, in quanto per ogni stazione S<sub>i</sub> in [S<sub>1</sub>, S<sub>5</sub>] esiste almeno un percorso tra S<sub>0</sub> e S<sub>6</sub> che non include S<sub>i</sub>:
 
 ![](https://github.com/fabridigua/pivot-stations-problem/blob/main/img/movement_graph_esempio_1.png)
 
@@ -134,8 +134,11 @@ for (const auto& s : _stations)
 }
 ```
 Per il ciclo interno ipotizzo un costo O(1).
+
 Il numero dei percorsi trovati, che chiamo P, dipende dal numero di stazioni V.
-Questo può essere stimato pensando che nel caso peggiore da ogni stazione è possibile raggiungere la destinazione passando per ogni altro nodo; dunque P= O(V<sup>2</sup>)
+
+Questo può essere stimato pensando che nel caso peggiore da ogni stazione è possibile raggiungere la destinazione passando per ogni altro nodo; dunque P= O(V<sup>2</sup>).
+
 Considerando che ciclo i percorsi percorribili per ogni stazione, la complessità viene **O(V<sup>3</sup>)**.
 
 
